@@ -15,15 +15,15 @@ const categories = [
 export default function HeroSection() {
   return (
     <main className="bg-[#f9f6f2]">
+
       {/* ── Hero ── */}
-      <section className="max-w-6xl mx-auto px-6 pt-12 pb-8">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 pt-8 sm:pt-12 pb-6 sm:pb-8">
+
         {/* Heading */}
-        <div className="text-center mb-8">
-          <h1 className="text-5xl font-medium text-gray-900 leading-tight">
+        <div className="text-center mb-6 sm:mb-8">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-medium text-gray-900 leading-tight">
             Aesthetic{" "}
-            <span className="italic text-[#c9a96e] font-normal">
-              Collections
-            </span>
+            <span className="italic text-[#c9a96e] font-normal">Collections</span>
             <br />
             with Newest Style
           </h1>
@@ -32,10 +32,11 @@ export default function HeroSection() {
           </p>
         </div>
 
-        {/* 3 Images + Explore button */}
-        <div className="relative flex gap-3 items-stretch h-[420px]">
-          {/* Left image */}
-          <div className="flex-1 rounded-2xl overflow-hidden bg-[#e8e0d8]">
+        {/* Images */}
+        <div className="relative flex gap-2 sm:gap-3 items-stretch h-[260px] sm:h-[340px] lg:h-[420px]">
+
+          {/* Left image — hidden on mobile */}
+          <div className="hidden sm:block flex-1 rounded-2xl overflow-hidden bg-[#e8e0d8]">
             <img
               src="c.jpg"
               alt="model 1"
@@ -43,16 +44,16 @@ export default function HeroSection() {
             />
           </div>
 
-          {/* Center image — taller with overlay text */}
-          <div className="flex-[1.3] rounded-2xl overflow-hidden bg-[#ede8e3] relative">
+          {/* Center image */}
+          <div className="flex-1 sm:flex-[1.3] rounded-2xl overflow-hidden bg-[#ede8e3] relative">
             <img
               src="b.jpg"
               alt="model 2"
               className="w-full h-full object-cover object-top"
             />
-            {/* Center card overlay */}
-            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 w-[80%] bg-white/90 backdrop-blur-sm rounded-xl px-4 py-3 text-center">
-              <p className="text-xs text-gray-500 mb-2">
+            {/* Overlay card */}
+            <div className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 w-[85%] sm:w-[80%] bg-white/90 backdrop-blur-sm rounded-xl px-3 sm:px-4 py-2.5 sm:py-3 text-center">
+              <p className="text-[10px] sm:text-xs text-gray-500 mb-2">
                 Discover a Wide Range of Fashion Options, Including Clothing,
                 Shoes, Accessories, and More
               </p>
@@ -77,30 +78,33 @@ export default function HeroSection() {
           {/* Explore button */}
           <Link
             href="/explore"
-            className="absolute top-4 right-4 w-16 h-16 rounded-full bg-[#8b7355] text-white flex flex-col items-center justify-center text-xs font-medium hover:bg-[#7a6448] transition-colors"
+            className="absolute top-3 right-3 sm:top-4 sm:right-4 w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-[#8b7355] text-white flex flex-col items-center justify-center text-[10px] sm:text-xs font-medium hover:bg-[#7a6448] transition-colors"
           >
-            <span className="text-lg leading-none">↗</span>
+            <span className="text-base sm:text-lg leading-none">↗</span>
             <span>Explore</span>
           </Link>
         </div>
       </section>
 
       {/* ── Top Categories ── */}
-      <section className="max-w-6xl mx-auto px-6 py-10">
-        <div className="flex items-start gap-12">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
+
+        {/* Mobile: stacked, Desktop: side by side */}
+        <div className="flex flex-col sm:flex-row sm:items-start sm:gap-12">
+
           {/* Left heading */}
-          <div className="min-w-[180px]">
-            <h2 className="text-3xl font-medium text-gray-900">
+          <div className="mb-5 sm:mb-0 sm:min-w-[180px]">
+            <h2 className="text-2xl sm:text-3xl font-medium text-gray-900">
               Top Categories
             </h2>
-            <p className="text-2xl italic text-[#c9a96e] font-normal mt-1">
+            <p className="text-xl sm:text-2xl italic text-[#c9a96e] font-normal mt-1">
               Collections
             </p>
           </div>
 
-          {/* Categories grid */}
+          {/* Categories grid — 1 col mobile, 2 col sm+ */}
           <div className="flex-1">
-            <div className="grid grid-cols-2 gap-x-12 gap-y-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-12 gap-y-3 sm:gap-y-4">
               {categories.map((cat) => (
                 <Link
                   key={cat.name}
@@ -108,7 +112,7 @@ export default function HeroSection() {
                   className="flex items-center gap-2 text-sm font-medium text-gray-600 hover:text-gray-900 tracking-wide border-b border-gray-200 pb-3"
                 >
                   {cat.name}
-                  <span className="bg-[#e8c27a] text-[#4a3200] text-[10px] font-medium rounded-full px-1.5 py-0.5">
+                  <span className="ml-auto bg-[#e8c27a] text-[#4a3200] text-[10px] font-medium rounded-full px-1.5 py-0.5">
                     {cat.count}
                   </span>
                 </Link>
@@ -116,7 +120,7 @@ export default function HeroSection() {
             </div>
 
             {/* See More */}
-            <div className="mt-6 flex justify-end">
+            <div className="mt-5 sm:mt-6 flex justify-end">
               <Link
                 href="/categories"
                 className="inline-flex items-center gap-1 text-xs font-medium border border-gray-300 rounded-full px-4 py-1.5 text-gray-600 hover:bg-gray-50"
