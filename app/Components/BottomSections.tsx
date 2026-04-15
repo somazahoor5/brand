@@ -4,7 +4,7 @@ import Link from "next/link";
 const articles = [
   {
     id: 1,
-    category: "BAGS",
+    category: "bags",
     date: "Jul 15, 2023",
     title: "Minimalist Bags, but Maximum in Style",
     desc: "Explore the ever-evolving world of minimalist bags and how they have become a staple in contemporary fashion.",
@@ -14,7 +14,7 @@ const articles = [
   },
   {
     id: 2,
-    category: "NEWS",
+    category: "news",
     date: "Jul 18, 2023",
     title: "Modern Menswear Essentials",
     desc: "Discover curated modern menswear pieces that bring together style, comfort, and versatility for the urban man.",
@@ -24,7 +24,7 @@ const articles = [
   },
   {
     id: 3,
-    category: "PANTS",
+    category: "pants",
     date: "Jul 22, 2023",
     title: "Step Up with Statement Aesthetic Pants",
     desc: "From wide-leg trousers to tailored cuts, statement pants are redefining how we approach everyday fashion.",
