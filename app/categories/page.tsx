@@ -3,7 +3,6 @@
 import { useState } from "react";
 
 const categories = [
-  // Default visible (pehli 8)
   { name: "Aesthetic Clothing", count: 23 },
   { name: "Bottoms & Pants", count: 15 },
   { name: "Outerwear", count: 8 },
@@ -12,8 +11,6 @@ const categories = [
   { name: "Aesthetic Essentials", count: 19 },
   { name: "Accessories", count: 27 },
   { name: "Lifestyle", count: 14 },
-
-  // See More ke baad dikhne wali categories
   { name: "Tops & Blouses", count: 18 },
   { name: "Bags & Totes", count: 16 },
   { name: "Dresses", count: 22 },
@@ -31,18 +28,18 @@ export default function TopCategories() {
   const rightCol = visibleCategories.slice(half);
 
   return (
-    <section className="bg-[#f5f0e8] px-10 py-12">
-      <div className="flex gap-10">
+    <section className="bg-[#f5f0e8] px-5 py-10 md:px-10 md:py-12">
+      <div className="flex flex-col gap-5 lg:flex-row lg:gap-10">
 
         {/* Heading */}
-        <div className="min-w-[160px]">
-          <h2 className="text-3xl font-medium text-gray-900">Top Categories</h2>
+        <div className="lg:min-w-[160px] lg:pt-1">
+          <h2 className="text-2xl md:text-3xl font-medium text-gray-900">Top Categories</h2>
           <p className="text-[#b8943a] italic text-base mt-1">Collections</p>
         </div>
 
         {/* Categories Grid */}
         <div className="flex-1">
-          <div className="grid grid-cols-2 gap-x-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8">
 
             {/* Left Column */}
             <div>
@@ -62,7 +59,7 @@ export default function TopCategories() {
             </div>
 
             {/* Right Column */}
-            <div className="border-l border-[#d8d0c0] pl-8">
+            <div className="border-t border-[#d8d0c0] sm:border-t-0 sm:border-l sm:pl-8">
               {rightCol.map((cat) => (
                 <div
                   key={cat.name}
