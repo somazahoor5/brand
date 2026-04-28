@@ -10,7 +10,7 @@ const articles = [
     desc: "Explore the ever-evolving world of minimalist bags and how they have become a staple in contemporary fashion.",
     author: "Julia Stone",
     comments: 3,
-    img: "l.jpg",
+    img: "bg.jpg",
   },
   {
     id: 2,
@@ -20,7 +20,7 @@ const articles = [
     desc: "Discover curated modern menswear pieces that bring together style, comfort, and versatility for the urban man.",
     author: "Mark Chen",
     comments: 5,
-    img: "m.jpg",
+    img: "Modern Menswear Essentials.jpg",
   },
   {
     id: 3,
@@ -30,7 +30,7 @@ const articles = [
     desc: "From wide-leg trousers to tailored cuts, statement pants are redefining how we approach everyday fashion.",
     author: "Sara Kim",
     comments: 7,
-    img: "o.jpg",
+    img: "Step Up with Statement Aesthetic Pants.jpg",
   },
 ];
 
