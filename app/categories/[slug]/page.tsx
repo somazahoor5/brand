@@ -216,6 +216,8 @@ export default function CategoryPage({ params }: { params: Promise<{ slug: strin
   const data = categoryProducts[slug];
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState("default");
+  // ✅ Toast state — page change nahi hoga, sirf notification aayega
+  const [toast, setToast] = useState<string | null>(null);
   const router = useRouter();
 
   if (!data) {
@@ -237,20 +239,53 @@ export default function CategoryPage({ params }: { params: Promise<{ slug: strin
 
   const handleAddToCart = (product: Product) => {
     const existing = JSON.parse(localStorage.getItem("cart") || "[]");
-    const alreadyIn = existing.find((item: Product & { quantity: number }) => item.id === product.id);
+    const alreadyIn = existing.find(
+      (item: Product & { quantity: number }) => item.id === product.id
+    );
     if (alreadyIn) {
       alreadyIn.quantity += 1;
     } else {
       existing.push({ ...product, quantity: 1 });
     }
     localStorage.setItem("cart", JSON.stringify(existing));
-    router.push("/cart");
+
+    // ✅ Navbar cart icon ko update karne ke liye custom event fire karo
+    window.dispatchEvent(new Event("cartUpdated"));
+
+    // ✅ Toast notification dikhao — page change nahi hoga
+    setToast(`✓ "${product.name}" cart mein add ho gaya!`);
+    setTimeout(() => setToast(null), 2500);
   };
 
   const related = relatedCategories[slug] || [];
 
   return (
     <main className="bg-[#f5f0e8] min-h-screen">
+
+      {/* ✅ Toast Notification */}
+      {toast && (
+        <div
+          className="
+            fixed top-5 left-1/2 -translate-x-1/2 z-50
+            bg-[#3a3228] text-white text-xs sm:text-sm
+            px-5 py-3 rounded-full shadow-lg
+            flex items-center gap-2
+            whitespace-nowrap
+          "
+          style={{
+            transition: "opacity 0.3s ease, transform 0.3s ease",
+          }}
+        >
+          <span>{toast}</span>
+          <button
+            onClick={() => router.push("/cart")}
+            className="ml-2 text-[#c9a96e] underline underline-offset-2 font-medium"
+          >
+            Cart dekho
+          </button>
+        </div>
+      )}
+
       {/* ── Container with safe padding for all screen sizes ── */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 py-8 sm:py-12 md:py-14">
 
@@ -276,12 +311,8 @@ export default function CategoryPage({ params }: { params: Promise<{ slug: strin
           <div className="h-px bg-[#d8d0c0] mt-4" />
         </div>
 
-        {/* ── Search + Sort Bar ──
-            Mobile  : stacked vertically, full width
-            Tablet+ : side by side row
-        */}
+        {/* Search + Sort Bar */}
         <div className="flex flex-col sm:flex-row gap-3 mb-6 sm:mb-8">
-          {/* Search */}
           <div className="relative flex-1">
             <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none text-sm">
               🔍
@@ -303,7 +334,6 @@ export default function CategoryPage({ params }: { params: Promise<{ slug: strin
             />
           </div>
 
-          {/* Sort */}
           <select
             value={sort}
             onChange={(e) => setSort(e.target.value)}
@@ -326,18 +356,12 @@ export default function CategoryPage({ params }: { params: Promise<{ slug: strin
           </select>
         </div>
 
-        {/* Product count */}
         {filtered.length > 0 && (
           <p className="text-xs text-gray-400 mb-4">
             {filtered.length} product{filtered.length !== 1 ? "s" : ""} found
           </p>
         )}
 
-        {/* ── Products Grid ──
-            Mobile  : 2 columns
-            sm      : 3 columns
-            md+     : 4 columns
-        */}
         {filtered.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-20 text-center">
             <p className="text-gray-400 text-4xl mb-3">🔍</p>
@@ -361,7 +385,7 @@ export default function CategoryPage({ params }: { params: Promise<{ slug: strin
           </div>
         )}
 
-        {/* ── Related Products ── */}
+        {/* Related Products */}
         {related.length > 0 && (
           <section className="mt-14 sm:mt-16">
             <div className="h-px bg-[#d8d0c0] mb-8" />
@@ -385,6 +409,7 @@ export default function CategoryPage({ params }: { params: Promise<{ slug: strin
         )}
 
       </div>
+
     </main>
   );
 }

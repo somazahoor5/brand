@@ -3,8 +3,6 @@ import { useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 
-// ─── Product Data ────────────────────────────────────────────────────────────
-// (same list – in a real project, move this to a shared lib/data.ts file)
 const products = [
   {
     id: 1,
@@ -119,68 +117,69 @@ const products = [
     care: "Machine wash warm, tumble dry low",
   },
   {
-  id: 9,
-  category: "DRESS",
-  name: "Floral Wrap Midi Dress",
-  price: "259,000",
-  originalPrice: null,
-  img: "fw.jpg",
-  colors: 2,
-  description:
-    "A feminine floral wrap midi dress designed with a flattering silhouette and soft flowing fabric. Perfect for casual outings or special occasions.",
-  sizes: ["XS", "S", "M", "L", "XL"],
-  material: "100% Viscose",
-  care: "Machine wash cold, hang dry",
-},
-{
-  id: 10,
-  category: "PANTS",
-  name: "Linen Wide Trousers",
-  price: "299,000",
-  originalPrice: null,
-  img: "linen wide trousers.jpg",
-  colors: 2,
-  description:
-    "Lightweight linen trousers with a relaxed wide-leg fit. Breathable and comfortable, ideal for warm weather styling.",
-  sizes: ["XS", "S", "M", "L", "XL"],
-  material: "100% Linen",
-  care: "Machine wash cold, do not tumble dry",
-},
-{
-  id: 11,
-  category: "TOP",
-  name: "Knit Crop Cardigan",
-  price: "219,000",
-  originalPrice: null,
-  img: "knit crop cardigan.jpg",
-  colors: 3,
-  description:
-    "A cozy knit crop cardigan with a modern silhouette. Soft texture and versatile styling make it a wardrobe essential.",
-  sizes: ["XS", "S", "M", "L"],
-  material: "80% Cotton, 20% Acrylic",
-  care: "Hand wash cold, lay flat to dry",
-},
-{
-  id: 12,
-  category: "BOTTOMS",
-  name: "Pleated Maxi Skirt",
-  price: "279,000",
-  originalPrice: null,
-  img: "pleated-maxi-skirtss.jpg",
-  colors: 2,
-  description:
-    "Elegant pleated maxi skirt with a flowing design. Adds movement and sophistication to both casual and formal outfits.",
-  sizes: ["XS", "S", "M", "L", "XL"],
-  material: "100% Polyester",
-  care: "Machine wash cold, hang dry",
-},
-  
+    id: 9,
+    category: "DRESS",
+    name: "Floral Wrap Midi Dress",
+    price: "259,000",
+    originalPrice: null,
+    img: "fw.jpg",
+    colors: 2,
+    description:
+      "A feminine floral wrap midi dress designed with a flattering silhouette and soft flowing fabric. Perfect for casual outings or special occasions.",
+    sizes: ["XS", "S", "M", "L", "XL"],
+    material: "100% Viscose",
+    care: "Machine wash cold, hang dry",
+  },
+  {
+    id: 10,
+    category: "PANTS",
+    name: "Linen Wide Trousers",
+    price: "299,000",
+    originalPrice: null,
+    img: "linen wide trousers.jpg",
+    colors: 2,
+    description:
+      "Lightweight linen trousers with a relaxed wide-leg fit. Breathable and comfortable, ideal for warm weather styling.",
+    sizes: ["XS", "S", "M", "L", "XL"],
+    material: "100% Linen",
+    care: "Machine wash cold, do not tumble dry",
+  },
+  {
+    id: 11,
+    category: "TOP",
+    name: "Knit Crop Cardigan",
+    price: "219,000",
+    originalPrice: null,
+    img: "knit crop cardigan.jpg",
+    colors: 3,
+    description:
+      "A cozy knit crop cardigan with a modern silhouette. Soft texture and versatile styling make it a wardrobe essential.",
+    sizes: ["XS", "S", "M", "L"],
+    material: "80% Cotton, 20% Acrylic",
+    care: "Hand wash cold, lay flat to dry",
+  },
+  {
+    id: 12,
+    category: "BOTTOMS",
+    name: "Pleated Maxi Skirt",
+    price: "279,000",
+    originalPrice: null,
+    img: "pleated-maxi-skirts.jpg",
+    colors: 2,
+    description:
+      "Elegant pleated maxi skirt with a flowing design. Adds movement and sophistication to both casual and formal outfits.",
+    sizes: ["XS", "S", "M", "L", "XL"],
+    material: "100% Polyester",
+    care: "Machine wash cold, hang dry",
+  },
 ];
 
-// ─── Color palette per slot ───────────────────────────────────────────────────
-const colorOptions = ["#c9a96e", "#8b7355", "#d4c5b0"];
+const colorOptions = [
+  { swatch: "#c9a96e", name: "Camel" },
+  { swatch: "#8b7355", name: "Walnut" },
+  { swatch: "#d4c5b0", name: "Linen" },
+];
 
-// ─── Page ────────────────────────────────────────────────────────────────────
 export default function ProductDetailPage() {
   const params = useParams();
   const id = Number(params.id);
@@ -191,16 +190,22 @@ export default function ProductDetailPage() {
   const [wishlist, setWishlist] = useState(false);
   const [qty, setQty] = useState(1);
   const [added, setAdded] = useState(false);
+  const [activeTab, setActiveTab] = useState<"details" | "care">("details");
 
   if (!product) {
     return (
-      <div className="min-h-screen bg-[#f9f6f2] flex flex-col items-center justify-center gap-4">
-        <p className="text-gray-500 text-lg">Product not found.</p>
+      <div className="min-h-screen bg-[#F2EDE6] flex flex-col items-center justify-center gap-6">
+        <p
+          className="text-[#7a6f65] text-lg"
+          style={{ fontFamily: "'Cormorant Garamond', serif" }}
+        >
+          Product not found.
+        </p>
         <Link
           href="/"
-          className="text-sm border border-gray-300 rounded-full px-5 py-2 text-gray-600 hover:bg-gray-100 transition-colors"
+          className="text-xs tracking-[0.2em] uppercase text-[#7a6f65] border border-[#c9a96e] px-8 py-3 hover:bg-[#c9a96e] hover:text-white transition-all duration-300"
         >
-          ← Back to Home
+          Return Home
         </Link>
       </div>
     );
@@ -208,116 +213,464 @@ export default function ProductDetailPage() {
 
   const handleAddToCart = () => {
     setAdded(true);
-    setTimeout(() => setAdded(false), 2000);
+    setTimeout(() => setAdded(false), 2500);
   };
 
   const isOnSale = !!product.originalPrice;
 
   return (
-    <div className="min-h-screen bg-[#f9f6f2]">
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap');
 
-      {/* ── Top bar ── */}
-      <div className="bg-white border-b border-gray-100 px-4 sm:px-8 py-3 flex items-center gap-2 text-xs text-gray-400">
-        <Link href="/" className="hover:text-gray-700 transition-colors">Home</Link>
-        <span>/</span>
-        <Link href="/products" className="hover:text-gray-700 transition-colors">Products</Link>
-        <span>/</span>
-        <span className="text-gray-600">{product.name}</span>
-      </div>
+        .pd-page { background: #F2EDE6; min-height: 100vh; font-family: 'Jost', sans-serif; }
 
-      {/* ── Main content ── */}
-      <div className="max-w-5xl mx-auto px-4 sm:px-8 py-8 sm:py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+        /* Announcement bar */
+        .pd-announce {
+          background: #1c1916;
+          color: #c9a96e;
+          text-align: center;
+          font-size: 11px;
+          letter-spacing: 0.25em;
+          padding: 9px 16px;
+          text-transform: uppercase;
+        }
 
-          {/* ── Image column ── */}
-          <div className="relative">
-            <div className="aspect-[3/4] rounded-2xl overflow-hidden bg-[#f0ece6]">
-              <img
-                src={`/${product.img}`}
-                alt={product.name}
-                className="w-full h-full object-cover object-top"
-              />
+        /* Nav */
+        .pd-nav {
+          background: #F2EDE6;
+          border-bottom: 1px solid #d9d2c8;
+          padding: 16px 40px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        }
+        .pd-nav-logo {
+          font-family: 'Cormorant Garamond', serif;
+          font-size: 22px;
+          font-weight: 400;
+          color: #1c1916;
+          letter-spacing: 0.05em;
+        }
+        .pd-nav-logo em { font-style: italic; color: #c9a96e; }
+        .pd-nav-links { display: flex; gap: 28px; }
+        .pd-nav-links a {
+          font-size: 11px;
+          letter-spacing: 0.2em;
+          text-transform: uppercase;
+          color: #6b6259;
+          text-decoration: none;
+          transition: color 0.2s;
+        }
+        .pd-nav-links a:hover { color: #1c1916; }
+
+        /* Breadcrumb */
+        .pd-breadcrumb {
+          padding: 14px 40px;
+          display: flex;
+          gap: 8px;
+          align-items: center;
+          font-size: 11px;
+          letter-spacing: 0.1em;
+          color: #9e9188;
+        }
+        .pd-breadcrumb a { color: #9e9188; text-decoration: none; }
+        .pd-breadcrumb a:hover { color: #1c1916; }
+        .pd-breadcrumb-sep { color: #c9a96e; font-size: 10px; }
+
+        /* Main grid */
+        .pd-main {
+          max-width: 1100px;
+          margin: 0 auto;
+          padding: 32px 40px 64px;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 56px;
+        }
+
+        /* Image column */
+        .pd-image-wrap {
+          position: relative;
+        }
+        .pd-image-frame {
+          aspect-ratio: 3/4;
+          background: #e6dfd5;
+          overflow: hidden;
+          position: relative;
+        }
+        .pd-image-frame img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: top;
+          transition: transform 0.6s ease;
+        }
+        .pd-image-frame:hover img { transform: scale(1.03); }
+
+        /* Corner accent lines */
+        .pd-corner {
+          position: absolute;
+          width: 28px;
+          height: 28px;
+          z-index: 2;
+        }
+        .pd-corner-tl { top: -1px; left: -1px; border-top: 1.5px solid #c9a96e; border-left: 1.5px solid #c9a96e; }
+        .pd-corner-tr { top: -1px; right: -1px; border-top: 1.5px solid #c9a96e; border-right: 1.5px solid #c9a96e; }
+        .pd-corner-bl { bottom: -1px; left: -1px; border-bottom: 1.5px solid #c9a96e; border-left: 1.5px solid #c9a96e; }
+        .pd-corner-br { bottom: -1px; right: -1px; border-bottom: 1.5px solid #c9a96e; border-right: 1.5px solid #c9a96e; }
+
+        .pd-sale-tag {
+          position: absolute;
+          top: 20px;
+          left: 0;
+          background: #c9a96e;
+          color: #fff;
+          font-size: 10px;
+          letter-spacing: 0.2em;
+          text-transform: uppercase;
+          padding: 5px 14px 5px 12px;
+          clip-path: polygon(0 0, 100% 0, 92% 50%, 100% 100%, 0 100%);
+          z-index: 3;
+        }
+
+        .pd-wishlist-btn {
+          position: absolute;
+          bottom: 20px;
+          right: 20px;
+          width: 44px;
+          height: 44px;
+          background: #F2EDE6;
+          border: 1px solid #d9d2c8;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          z-index: 3;
+          transition: background 0.2s;
+        }
+        .pd-wishlist-btn:hover { background: #fff; }
+
+        /* Info column */
+        .pd-info { display: flex; flex-direction: column; gap: 0; padding-top: 4px; }
+
+        .pd-cat-tag {
+          font-size: 10px;
+          letter-spacing: 0.3em;
+          text-transform: uppercase;
+          color: #c9a96e;
+          margin-bottom: 10px;
+        }
+
+        .pd-name {
+          font-family: 'Cormorant Garamond', serif;
+          font-size: 36px;
+          font-weight: 300;
+          color: #1c1916;
+          line-height: 1.2;
+          margin-bottom: 18px;
+          letter-spacing: 0.02em;
+        }
+
+        .pd-price-row {
+          display: flex;
+          align-items: baseline;
+          gap: 12px;
+          margin-bottom: 24px;
+          padding-bottom: 24px;
+          border-bottom: 1px solid #d9d2c8;
+        }
+        .pd-price {
+          font-family: 'Cormorant Garamond', serif;
+          font-size: 26px;
+          font-weight: 400;
+          color: #1c1916;
+          letter-spacing: 0.03em;
+        }
+        .pd-price-orig {
+          font-size: 16px;
+          color: #b0a898;
+          text-decoration: line-through;
+          font-family: 'Cormorant Garamond', serif;
+        }
+        .pd-sale-pill {
+          font-size: 10px;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          background: #fdf3e7;
+          color: #c9a96e;
+          padding: 3px 10px;
+          border: 1px solid #e8d0a8;
+        }
+
+        .pd-desc {
+          font-size: 14px;
+          color: #6b6259;
+          line-height: 1.8;
+          margin-bottom: 28px;
+          font-weight: 300;
+        }
+
+        /* Color picker */
+        .pd-section-label {
+          font-size: 10px;
+          letter-spacing: 0.25em;
+          text-transform: uppercase;
+          color: #1c1916;
+          margin-bottom: 12px;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+        }
+        .pd-section-label span {
+          color: #9e9188;
+          font-weight: 300;
+          text-transform: none;
+          letter-spacing: 0.05em;
+          font-size: 12px;
+        }
+
+        .pd-colors { display: flex; gap: 10px; margin-bottom: 24px; }
+        .pd-color-swatch {
+          width: 30px;
+          height: 30px;
+          border: 2px solid transparent;
+          cursor: pointer;
+          transition: all 0.2s;
+          position: relative;
+        }
+        .pd-color-swatch.active::after {
+          content: '';
+          position: absolute;
+          inset: -5px;
+          border: 1px solid #c9a96e;
+        }
+
+        /* Sizes */
+        .pd-sizes { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 28px; }
+        .pd-size {
+          min-width: 44px;
+          height: 44px;
+          padding: 0 12px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border: 1px solid #d9d2c8;
+          background: transparent;
+          font-family: 'Jost', sans-serif;
+          font-size: 12px;
+          letter-spacing: 0.1em;
+          color: #6b6259;
+          cursor: pointer;
+          transition: all 0.2s;
+        }
+        .pd-size:hover { border-color: #c9a96e; color: #1c1916; }
+        .pd-size.active { background: #1c1916; color: #F2EDE6; border-color: #1c1916; }
+
+        /* Quantity */
+        .pd-qty-wrap { display: flex; align-items: center; gap: 0; margin-bottom: 28px; }
+        .pd-qty-btn {
+          width: 44px;
+          height: 44px;
+          border: 1px solid #d9d2c8;
+          background: transparent;
+          font-size: 18px;
+          color: #6b6259;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.2s;
+          font-family: 'Jost', sans-serif;
+        }
+        .pd-qty-btn:hover { border-color: #c9a96e; color: #1c1916; }
+        .pd-qty-num {
+          width: 52px;
+          height: 44px;
+          border-top: 1px solid #d9d2c8;
+          border-bottom: 1px solid #d9d2c8;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 14px;
+          font-weight: 400;
+          color: #1c1916;
+        }
+
+        /* CTA buttons */
+        .pd-cta-row { display: flex; gap: 10px; margin-bottom: 28px; }
+        .pd-add-btn {
+          flex: 1;
+          height: 52px;
+          border: none;
+          font-family: 'Jost', sans-serif;
+          font-size: 11px;
+          letter-spacing: 0.3em;
+          text-transform: uppercase;
+          cursor: pointer;
+          transition: all 0.3s;
+          background: #1c1916;
+          color: #F2EDE6;
+        }
+        .pd-add-btn:hover { background: #c9a96e; }
+        .pd-add-btn.success { background: #5a7a4a; color: #fff; }
+        .pd-save-btn {
+          width: 52px;
+          height: 52px;
+          border: 1px solid #d9d2c8;
+          background: transparent;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.2s;
+          flex-shrink: 0;
+        }
+        .pd-save-btn:hover { border-color: #c9a96e; }
+
+        /* Info tabs */
+        .pd-tabs { border-top: 1px solid #d9d2c8; }
+        .pd-tab-header { display: flex; }
+        .pd-tab-btn {
+          flex: 1;
+          padding: 14px 0;
+          font-family: 'Jost', sans-serif;
+          font-size: 10px;
+          letter-spacing: 0.2em;
+          text-transform: uppercase;
+          color: #9e9188;
+          background: transparent;
+          border: none;
+          border-bottom: 2px solid transparent;
+          cursor: pointer;
+          transition: all 0.2s;
+        }
+        .pd-tab-btn.active { color: #1c1916; border-bottom-color: #c9a96e; }
+        .pd-tab-content {
+          padding: 18px 0;
+          font-size: 13px;
+          color: #6b6259;
+          line-height: 1.8;
+          font-weight: 300;
+        }
+        .pd-tab-row { display: flex; gap: 12px; padding: 6px 0; border-bottom: 1px solid #ede8e1; }
+        .pd-tab-key { color: #1c1916; font-weight: 400; min-width: 80px; font-size: 12px; letter-spacing: 0.05em; }
+
+        .pd-back-link {
+          font-size: 11px;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          color: #9e9188;
+          text-decoration: none;
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          padding-top: 12px;
+          transition: color 0.2s;
+        }
+        .pd-back-link:hover { color: #c9a96e; }
+
+        /* Decorative ornament */
+        .pd-ornament {
+          text-align: center;
+          font-family: 'Cormorant Garamond', serif;
+          font-style: italic;
+          font-size: 13px;
+          color: #c9a96e;
+          letter-spacing: 0.1em;
+          padding: 8px 0;
+        }
+      `}</style>
+
+      <div className="pd-page">
+        <div className="pd-announce">✦ 20% discount on all trend this weekend ✦</div>
+
+        <nav className="pd-nav">
+          <div className="pd-nav-logo">
+            Æsthetic <em>Collections</em>
+          </div>
+          <div className="pd-nav-links">
+            <a href="#">Popular</a>
+            <a href="#">New Arrivals</a>
+            <a href="#">Showcase</a>
+            <a href="#">Accessories</a>
+          </div>
+          <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6b6259" strokeWidth="1.5">
+              <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+            </svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#6b6259" strokeWidth="1.5">
+              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/>
+            </svg>
+          </div>
+        </nav>
+
+        <div className="pd-breadcrumb">
+          <Link href="/">Home</Link>
+          <span className="pd-breadcrumb-sep">›</span>
+          <Link href="/products">Products</Link>
+          <span className="pd-breadcrumb-sep">›</span>
+          <span style={{ color: "#1c1916" }}>{product.name}</span>
+        </div>
+
+        <div className="pd-main">
+          {/* ── Image Column ── */}
+          <div className="pd-image-wrap">
+            <div className="pd-corner pd-corner-tl" />
+            <div className="pd-corner pd-corner-tr" />
+            <div className="pd-corner pd-corner-bl" />
+            <div className="pd-corner pd-corner-br" />
+
+            <div className="pd-image-frame">
+              <img src={`/${product.img}`} alt={product.name} />
+              {isOnSale && <div className="pd-sale-tag">Sale</div>}
             </div>
 
-            {/* Sale badge */}
-            {isOnSale && (
-              <div className="absolute top-4 left-4 bg-[#c9a96e] text-white text-[10px] tracking-widest font-semibold px-3 py-1 rounded-full uppercase">
-                Sale
-              </div>
-            )}
-
-            {/* Wishlist button */}
             <button
+              className="pd-wishlist-btn"
               onClick={() => setWishlist(!wishlist)}
-              className="absolute top-4 right-4 w-9 h-9 rounded-full bg-white shadow flex items-center justify-center hover:scale-110 transition-transform"
+              aria-label="Add to wishlist"
             >
-              <svg
-                width="16"
-                height="16"
-                viewBox="0 0 24 24"
+              <svg width="18" height="18" viewBox="0 0 24 24"
                 fill={wishlist ? "#c9a96e" : "none"}
-                stroke={wishlist ? "#c9a96e" : "#999"}
-                strokeWidth="2"
+                stroke={wishlist ? "#c9a96e" : "#6b6259"}
+                strokeWidth="1.5"
               >
                 <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
               </svg>
             </button>
           </div>
 
-          {/* ── Info column ── */}
-          <div className="flex flex-col gap-5">
+          {/* ── Info Column ── */}
+          <div className="pd-info">
+            <p className="pd-cat-tag">{product.category}</p>
 
-            {/* Category */}
-            <p className="text-[10px] tracking-widest text-gray-400 uppercase">
-              {product.category}
-            </p>
+            <h1 className="pd-name">{product.name}</h1>
 
-            {/* Name */}
-            <h1 className="text-2xl sm:text-3xl font-semibold text-gray-800 leading-snug">
-              {product.name}
-            </h1>
-
-            {/* Price */}
-            <div className="flex items-center gap-3">
-              <span className="text-xl font-semibold text-gray-900">
-                Rp {product.price}
-              </span>
+            <div className="pd-price-row">
+              <span className="pd-price">Rp {product.price}</span>
               {product.originalPrice && (
-                <span className="text-base text-gray-400 line-through">
-                  Rp {product.originalPrice}
-                </span>
-              )}
-              {isOnSale && (
-                <span className="text-xs text-[#c9a96e] font-medium">
-                  On Sale
-                </span>
+                <>
+                  <span className="pd-price-orig">Rp {product.originalPrice}</span>
+                  <span className="pd-sale-pill">On Sale</span>
+                </>
               )}
             </div>
 
-            {/* Divider */}
-            <hr className="border-gray-200" />
-
-            {/* Description */}
-            <p className="text-sm text-gray-600 leading-relaxed">
-              {product.description}
-            </p>
+            <p className="pd-desc">{product.description}</p>
 
             {/* Color */}
             <div>
-              <p className="text-xs font-medium text-gray-700 mb-2 tracking-wide uppercase">
-                Color
+              <p className="pd-section-label">
+                Color <span>— {colorOptions[selectedColor].name}</span>
               </p>
-              <div className="flex gap-2">
+              <div className="pd-colors">
                 {Array.from({ length: product.colors }).map((_, i) => (
                   <button
                     key={i}
+                    className={`pd-color-swatch ${selectedColor === i ? "active" : ""}`}
+                    style={{ background: colorOptions[i].swatch }}
                     onClick={() => setSelectedColor(i)}
-                    className={`w-7 h-7 rounded-full border-2 transition-all ${
-                      selectedColor === i
-                        ? "border-gray-700 scale-110"
-                        : "border-transparent"
-                    }`}
-                    style={{ backgroundColor: colorOptions[i] }}
+                    aria-label={colorOptions[i].name}
                   />
                 ))}
               </div>
@@ -325,19 +678,16 @@ export default function ProductDetailPage() {
 
             {/* Size */}
             <div>
-              <p className="text-xs font-medium text-gray-700 mb-2 tracking-wide uppercase">
-                Size
+              <p className="pd-section-label">
+                Size{" "}
+                {selectedSize && <span>— {selectedSize}</span>}
               </p>
-              <div className="flex gap-2 flex-wrap">
+              <div className="pd-sizes">
                 {product.sizes.map((size) => (
                   <button
                     key={size}
+                    className={`pd-size ${selectedSize === size ? "active" : ""}`}
                     onClick={() => setSelectedSize(size)}
-                    className={`w-10 h-10 rounded-lg text-xs font-medium border transition-all ${
-                      selectedSize === size
-                        ? "bg-gray-800 text-white border-gray-800"
-                        : "bg-white text-gray-600 border-gray-200 hover:border-gray-400"
-                    }`}
                   >
                     {size}
                   </button>
@@ -347,65 +697,87 @@ export default function ProductDetailPage() {
 
             {/* Quantity */}
             <div>
-              <p className="text-xs font-medium text-gray-700 mb-2 tracking-wide uppercase">
-                Quantity
-              </p>
-              <div className="flex items-center gap-3">
-                <button
-                  onClick={() => setQty(Math.max(1, qty - 1))}
-                  className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-gray-100 transition-colors"
-                >
-                  −
-                </button>
-                <span className="text-sm font-medium text-gray-800 w-5 text-center">
-                  {qty}
-                </span>
-                <button
-                  onClick={() => setQty(qty + 1)}
-                  className="w-8 h-8 rounded-full border border-gray-200 flex items-center justify-center text-gray-600 hover:bg-gray-100 transition-colors"
-                >
-                  +
-                </button>
+              <p className="pd-section-label">Quantity</p>
+              <div className="pd-qty-wrap">
+                <button className="pd-qty-btn" onClick={() => setQty(Math.max(1, qty - 1))}>−</button>
+                <div className="pd-qty-num">{qty}</div>
+                <button className="pd-qty-btn" onClick={() => setQty(qty + 1)}>+</button>
               </div>
             </div>
 
-            {/* Add to Cart */}
-            <button
-              onClick={handleAddToCart}
-              className={`w-full py-3 rounded-full text-sm font-medium tracking-wide transition-all ${
-                added
-                  ? "bg-green-500 text-white"
-                  : "bg-gray-900 text-white hover:bg-gray-700"
-              }`}
-            >
-              {added ? "✓ Added to Cart" : "Add to Cart"}
-            </button>
+            {/* CTA */}
+            <div className="pd-cta-row">
+              <button
+                className={`pd-add-btn ${added ? "success" : ""}`}
+                onClick={handleAddToCart}
+              >
+                {added ? "✓  Added to Cart" : "Add to Cart"}
+              </button>
+              <button
+                className="pd-save-btn"
+                onClick={() => setWishlist(!wishlist)}
+                aria-label="Save to wishlist"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24"
+                  fill={wishlist ? "#c9a96e" : "none"}
+                  stroke={wishlist ? "#c9a96e" : "#6b6259"}
+                  strokeWidth="1.5"
+                >
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
+                </svg>
+              </button>
+            </div>
 
-            {/* Divider */}
-            <hr className="border-gray-200" />
-
-            {/* Product details */}
-            <div className="space-y-2 text-sm text-gray-600">
-              <div className="flex gap-2">
-                <span className="font-medium text-gray-700 w-20">Material</span>
-                <span>{product.material}</span>
+            {/* Tabs */}
+            <div className="pd-tabs">
+              <div className="pd-tab-header">
+                <button
+                  className={`pd-tab-btn ${activeTab === "details" ? "active" : ""}`}
+                  onClick={() => setActiveTab("details")}
+                >
+                  Product Details
+                </button>
+                <button
+                  className={`pd-tab-btn ${activeTab === "care" ? "active" : ""}`}
+                  onClick={() => setActiveTab("care")}
+                >
+                  Care Guide
+                </button>
               </div>
-              <div className="flex gap-2">
-                <span className="font-medium text-gray-700 w-20">Care</span>
-                <span>{product.care}</span>
+              <div className="pd-tab-content">
+                {activeTab === "details" ? (
+                  <div>
+                    <div className="pd-tab-row">
+                      <span className="pd-tab-key">Material</span>
+                      <span>{product.material}</span>
+                    </div>
+                    <div className="pd-tab-row" style={{ borderBottom: "none" }}>
+                      <span className="pd-tab-key">Category</span>
+                      <span>{product.category}</span>
+                    </div>
+                  </div>
+                ) : (
+                  <div>
+                    <div className="pd-tab-row" style={{ borderBottom: "none" }}>
+                      <span className="pd-tab-key">Wash</span>
+                      <span>{product.care}</span>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
 
-            {/* Back link */}
-            <Link
-              href="/"
-              className="text-xs text-gray-400 hover:text-gray-600 transition-colors mt-2 inline-flex items-center gap-1"
-            >
-              ← Continue Shopping
+            <div className="pd-ornament">~ est. 2024 · Aesthetic Collections ~</div>
+
+            <Link href="/" className="pd-back-link">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                <path d="M19 12H5M12 19l-7-7 7-7" />
+              </svg>
+              Continue Shopping
             </Link>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

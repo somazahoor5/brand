@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { ShoppingBag, Heart, User, Search, Menu, X } from "lucide-react";
 
@@ -12,8 +12,26 @@ const navLinks = [
 ];
 
 export default function Navbar() {
-  const [cartCount] = useState(2);
+  const [cartCount, setCartCount] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    // Cart count calculate karo
+    const updateCartCount = () => {
+      const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+      const total = cart.reduce(
+        (sum: number, item: { quantity: number }) => sum + item.quantity,
+        0
+      );
+      setCartCount(total);
+    };
+
+    updateCartCount(); // page load par pehli baar
+
+    // category page se "cartUpdated" event aaye to update karo
+    window.addEventListener("cartUpdated", updateCartCount);
+    return () => window.removeEventListener("cartUpdated", updateCartCount);
+  }, []);
 
   return (
     <header className="w-full font-sans">
@@ -100,14 +118,15 @@ export default function Navbar() {
 
         {/* Icons */}
         <div className="flex items-center gap-3.5 ml-auto">
-          <div className="relative cursor-pointer">
+          {/* ✅ Cart icon — ab real-time count dikhayega */}
+          <Link href="/cart" className="relative cursor-pointer">
             <ShoppingBag size={20} className="text-gray-700" strokeWidth={1.5} />
             {cartCount > 0 && (
               <span className="absolute -top-1.5 -right-1.5 bg-[#c9a96e] text-white text-[9px] rounded-full w-3.5 h-3.5 flex items-center justify-center">
-                {cartCount}
+                {cartCount > 9 ? "9+" : cartCount}
               </span>
             )}
-          </div>
+          </Link>
           <Heart size={20} className="text-gray-700 cursor-pointer" strokeWidth={1.5} />
           <User size={20} className="text-gray-700 cursor-pointer" strokeWidth={1.5} />
         </div>

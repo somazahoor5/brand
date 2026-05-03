@@ -215,12 +215,7 @@ export default function ProductsSection() {
 
         {/* Button */}
         <div className="flex justify-center mt-6 sm:mt-8">
-          <Link
-            href="/products"
-            className="text-xs sm:text-sm border border-gray-300 rounded-full px-5 sm:px-6 py-2 text-gray-600 hover:bg-gray-100 transition-colors"
-          >
-            View More Products ›
-          </Link>
+          
         </div>
       </div>
     </section>

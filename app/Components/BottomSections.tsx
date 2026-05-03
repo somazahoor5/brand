@@ -10,7 +10,7 @@ const articles = [
     desc: "Explore the ever-evolving world of minimalist bags and how they have become a staple in contemporary fashion.",
     author: "Julia Stone",
     comments: 3,
-    img: "bg.jpg",
+    img: "bb.jpg",
   },
   {
     id: 2,

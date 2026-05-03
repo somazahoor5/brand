@@ -115,14 +115,7 @@ export default function HeroSection() {
               ))}
             </div>
 
-            {/* See More */}
-            <div className="mt-5 sm:mt-6 flex justify-end">
-              <Link
-                href="/categories"
-                className="inline-flex items-center gap-1 text-xs font-medium border border-gray-300 rounded-full px-4 py-1.5 text-gray-600 hover:bg-gray-50"
-              >
-                See More <span>›</span>
-              </Link>
+            <div className="mt-6 text-right"> 
             </div>
           </div>
         </div>
